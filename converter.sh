@@ -43,10 +43,16 @@ then
 
 	# Install base applications first!
 	
+	echo "Adding backports to apt..."
+	sleep 2
+	echo "## Squeeze Backports" >> /etc/apt/sources.list
+	echo "deb http://backports.debian.org/debian-backports squeeze-backports main contrib non-free" >> /etc/apt/sources.list
+	echo "#deb-src http://backports.debian.org/debian-backports squeeze-backports main contrib non-free" >> /etc/apt/sources.list
+
 	apt-get update
 	echo "Installing base applications..."
 	sleep 3
-	apt-get install $stable_debian_pkgs -y --force-yes
+	apt-get install -t squeeze-backports $stable_debian_pkgs -y --force-yes
 	
 	# Now download the crunchbang specific ones
 	echo "Deleting cb_tmp folder!"
@@ -65,7 +71,7 @@ then
 	
 	echo "[Fixing up dependencies]"
 	sleep 3
-	apt-get -f install
+	apt-get -t squeeze-backports -f install
 
 	# Finish
 	cd ..
